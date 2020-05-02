@@ -1,4 +1,5 @@
 const bmiForm = document.querySelector('.bmiForm');
+const resultsWrapper = document.querySelector('.results-wrapper')
 
 bmiForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -14,13 +15,34 @@ bmiForm.addEventListener('submit', (e) => {
 })
 
 const renderBMI = (data) => {
-    document.querySelector('.results').textContent = '';
+    document.querySelector('.results-wrapper').textContent = '';
 
-    const dataPara = document.createElement('p');
-    dataPara.textContent = `Your BMI is : ${data.toFixed(2)}`;
-    document.querySelector('.results').appendChild(dataPara)
+    const div = createElement('div');
+    const dataPara = createElement('p');
+    
+    addClass(div, 'results');
+    addText(dataPara, `Your BMI is : ${data.toFixed(2)}`) ;
+
+    appendElement(div, dataPara);
+    appendElement(resultsWrapper, div);
 
 }
+
+const appendElement = (parent, child) => {
+    parent.appendChild(child);
+};
+
+const addText = (element, text) => {
+    element.textContent = text;
+};
+
+const addClass = (element, name) => {
+    element.className = name;
+};
+
+const createElement = (type) => {
+    return document.createElement(type);
+};
 
 const lbsToKilos = (weight) => {
     return weight / 2.205;
@@ -37,3 +59,4 @@ const inchesToMeters = (inches) => {
 const calculateBMI = (weight, height) => {
     return weight / (height * height);
 };
+
