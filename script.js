@@ -10,23 +10,37 @@ bmiForm.addEventListener('submit', (e) => {
     const height = footMeters + inchesMeters;
 
     const BMI = calculateBMI(weight, height);
-    renderBMI(BMI);
+    const classification = getClassification(BMI);
+    renderBMI(BMI, classification);
     e.target.reset();
 })
 
-const renderBMI = (data) => {
+const renderBMI = (data, classification) => {
     document.querySelector('.results-wrapper').textContent = '';
 
     const div = createElement('div');
     const dataPara = createElement('p');
     
     addClass(div, 'results');
-    addText(dataPara, `Your BMI is : ${data.toFixed(2)}`) ;
+    addText(dataPara, `Your BMI is : ${data.toFixed(2)} ${classification}`);
 
     appendElement(div, dataPara);
     appendElement(resultsWrapper, div);
 
 }
+const getClassification = (value) => {
+    let classification = '';
+    if(value < 18.5){
+        classification = 'Underweight';
+    } else if( value > 18.5 && value < 24.9){
+        classification = 'Normal Weight';
+    } else if (value > 24.9 && value < 29.9) {
+        classification = 'Overweight';
+    } else if (value > 30) {
+        classification = 'Obese';
+    }
+    return classification;
+};
 
 const appendElement = (parent, child) => {
     parent.appendChild(child);
